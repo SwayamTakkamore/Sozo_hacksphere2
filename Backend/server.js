@@ -175,7 +175,6 @@ app.post("/ideas", upload.single("pdf"), async (req, res) => {
       return res.status(400).json({ error: "Missing required fields" });
     }
     
-    // Create and save the idea document
     const newIdea = new Idea({
       title,
       domain,
@@ -244,6 +243,30 @@ app.get("/mentors", async (req, res) => {
   res.json(mentors);
 });
 
+app.get("/mentors/:id", async (req, res) => {
+  try {
+    const mentor = await User.findOne({ _id: req.params.id, role: "mentor" }, "name expertise");
+    if (!mentor) return res.status(404).json({ message: "Mentor not found" });
+    res.json(mentor);
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
+});
+
+app.get("/students", async (req, res) => {
+  const students = await User.find({ role: "student" }, "name expertise");
+  res.json(students);
+});
+
+app.get("/students/:id", async (req, res) => {
+  try {
+    const student = await User.findOne({ _id: req.params.id, role: "student" }, "name expertise");
+    if (!student) return res.status(404).json({ message: "Student not found" });
+    res.json(student);
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
+});
 
 // Pitch Idea to Mentor
 app.post("/pitch", requireLogin, async (req, res) => {

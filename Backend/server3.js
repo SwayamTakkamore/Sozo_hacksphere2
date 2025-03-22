@@ -173,10 +173,16 @@ app.post("/ideas", upload.single("pdf"), async (req, res) => {
       uid,
       pdf: pdfPath,
       email,
+      status: "pending"
     });
 
     await newIdea.save();
     res.json({ message: "Idea submitted successfully", idea: newIdea });
+  
+    res.status(201).json({ 
+      message: "Idea submitted successfully", 
+      idea: newIdea 
+    });
   } catch (error) {
     res.status(500).json({ error: "Error submitting idea" });
   }
@@ -184,14 +190,30 @@ app.post("/ideas", upload.single("pdf"), async (req, res) => {
 
 // Delete an idea
 app.delete("/ideas/:id", async (req, res) => {
-    try {
-      const { id } = req.params;
-      await Idea.findByIdAndDelete(id);
-      res.status(200).json({ message: "Idea deleted successfully" });
-    } catch (error) {
-      res.status(500).json({ error: "Failed to delete idea" });
+  try {
+    const { id } = req.params;
+    await Idea.findByIdAndDelete(id);
+    res.status(200).json({ message: "Idea deleted successfully" });
+  } catch (error) {
+    res.status(500).json({ error: "Failed to delete idea" });
+  }
+});
+
+app.post("/user-ideas", async (req, res) => {
+  try {
+    const { email } = req.body;
+    
+    if (!email) {
+      return res.status(400).json({ error: "Email is required" });
     }
-  });
+    
+    const ideas = await Idea.find({ email });
+    res.json(ideas);
+  } catch (error) {
+    console.error("Error fetching ideas:", error);
+    res.status(500).json({ error: "Failed to fetch ideas" });
+  }
+});
 
 // Delete Idea (Only Owner)
 // app.delete("/idea/:id", requireLogin, async (req, res) => {
