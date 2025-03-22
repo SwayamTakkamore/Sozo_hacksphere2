@@ -107,16 +107,6 @@ app.post("/logout", (req, res) => {
   res.json({ message: "Logged out successfully" });
 });
 
-// Add Idea (Student Only)
-// app.post("/idea", requireLogin, async (req, res) => {
-//   if (req.session.user.role !== "student") return res.status(403).json({ message: "Only students can add ideas" });
-
-//   const { title, description } = req.body;
-//   const newIdea = new Idea({ studentId: req.session.user._id, title, description });
-//   await newIdea.save();
-//   res.json({ message: "Idea submitted successfully" });
-// });
-
 // Get all ideas
 app.get("/ideas", async (req, res) => {
     try {
@@ -163,57 +153,32 @@ app.put("/ideas/:id/verify", async (req, res) => {
   });
   
 
-// Update the ideas endpoint for file uploads
 app.post("/ideas", upload.single("pdf"), async (req, res) => {
   try {
-    const { title, domain, subDomain, tags, description, email } = req.body;
+    const { title, domain, subDomain, tags, description, uid, email } = req.body;
     const pdfPath = req.file ? req.file.path : null;
-    
+
     console.log("Receiving idea submission:", { title, domain, email });
-    
+  
     if (!title || !domain || !subDomain || !description || !email) {
       return res.status(400).json({ error: "Missing required fields" });
     }
-    
-    // Create and save the idea document
+
     const newIdea = new Idea({
       title,
       domain,
       subDomain,
       tags: tags.split(",").map((tag) => tag.trim()), // Convert CSV string to array
       description,
+      uid,
       pdf: pdfPath,
       email,
-      status: "pending" // Default status
     });
 
     await newIdea.save();
-    console.log("Idea saved successfully:", newIdea._id);
-    
-    res.status(201).json({ 
-      message: "Idea submitted successfully", 
-      idea: newIdea 
-    });
+    res.json({ message: "Idea submitted successfully", idea: newIdea });
   } catch (error) {
-    console.error("Error submitting idea:", error);
-    res.status(500).json({ error: "Error submitting idea", details: error.message });
-  }
-});
-
-// Add route to get ideas by email
-app.post("/user-ideas", async (req, res) => {
-  try {
-    const { email } = req.body;
-    
-    if (!email) {
-      return res.status(400).json({ error: "Email is required" });
-    }
-    
-    const ideas = await Idea.find({ email });
-    res.json(ideas);
-  } catch (error) {
-    console.error("Error fetching ideas:", error);
-    res.status(500).json({ error: "Failed to fetch ideas" });
+    res.status(500).json({ error: "Error submitting idea" });
   }
 });
 
@@ -242,6 +207,34 @@ app.delete("/ideas/:id", async (req, res) => {
 app.get("/mentors", async (req, res) => {
   const mentors = await User.find({ role: "mentor" }, "name expertise");
   res.json(mentors);
+});
+
+// Get a single mentor by ID
+app.get("/mentors/:id", async (req, res) => {
+  try {
+    const mentor = await User.findOne({ _id: req.params.id, role: "mentor" }, "name expertise");
+    if (!mentor) return res.status(404).json({ message: "Mentor not found" });
+    res.json(mentor);
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
+});
+
+// Student List
+app.get("/students", async (req, res) => {
+    const students = await User.find({ role: "student" }, "name expertise");
+    res.json(students);
+});
+
+// Get a single student by ID
+app.get("/students/:id", async (req, res) => {
+    try {
+      const student = await User.findOne({ _id: req.params.id, role: "student" }, "name expertise");
+      if (!student) return res.status(404).json({ message: "Student not found" });
+      res.json(student);
+    } catch (err) {
+      res.status(500).json({ message: err.message });
+    }
 });
 
 
@@ -294,6 +287,7 @@ app.post('/user-role', async (req, res) => {
   }
 });
 
+// Fetch User Data by Email
 app.get("/user", async (req, res) => {
   const { email } = req.query;
   try {
