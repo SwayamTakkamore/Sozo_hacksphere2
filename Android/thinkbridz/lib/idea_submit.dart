@@ -38,7 +38,7 @@ class _IdeaSubmissionPageState extends State<IdeaSubmissionPage> {
     setState(() => _isLoading = true);
 
     try {
-      final url = Uri.parse('http://192.168.182.199:5000/ideas');
+      final url = Uri.parse('http://192.168.139.199:5000/ideas');
       final request = http.MultipartRequest('POST', url);
 
       // Add text fields

@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -17,6 +18,7 @@ class _ProfileState extends State<Profile> {
   Map<String, dynamic>? userData;
   late String userId;
   late String role;
+  static String? baseUrl = dotenv.env['BASE_URL'];
 
   @override
   void initState() {
@@ -191,7 +193,7 @@ class _ProfileState extends State<Profile> {
 
   Future<void> logoutUser() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    final url = Uri.parse('http://192.168.182.199:5000/logout');
+    final url = Uri.parse('$baseUrl/logout');
 
     try {
       final response = await http.post(url);

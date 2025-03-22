@@ -12,23 +12,21 @@ class _IPAddressScreenState extends State<IPAddressScreen> {
   Future<void> _getIPAddress() async {
     try {
       for (var interface in await NetworkInterface.list()) {
-        if (interface.name.contains("ap") || interface.name.contains("wlan")) {
-          for (var addr in interface.addresses) {
-            if (addr.type == InternetAddressType.IPv4) {
-              setState(() {
-                _ipAddress = addr.address;
-              });
-              return;
-            }
+        for (var addr in interface.addresses) {
+          if (addr.type == InternetAddressType.IPv4 && addr.address.startsWith("192.168.")) {
+            setState(() {
+              _ipAddress = addr.address;
+            });
+            return;
           }
         }
       }
       setState(() {
-        _ipAddress = "No valid Hotspot IP found";
+        _ipAddress = "No valid IP found";
       });
     } catch (e) {
       setState(() {
-        _ipAddress = "Failed to get IP: $e";
+        _ipAddress = "Failed to get IP";
       });
     }
   }
@@ -36,7 +34,7 @@ class _IPAddressScreenState extends State<IPAddressScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text("Get WiFi IPv4 Address")),
+      appBar: AppBar(title: Text("Get IPv4 Address")),
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,

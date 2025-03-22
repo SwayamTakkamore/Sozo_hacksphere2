@@ -1,5 +1,7 @@
 import 'dart:convert';
+import 'dart:core';
 import 'package:flutter/material.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:http/http.dart' as http;
 import 'idea_submit.dart';
 import 'ideabot.dart';
@@ -17,7 +19,7 @@ class Dashboard extends StatefulWidget {
 }
 
 class _DashboardState extends State<Dashboard> {
-  static const String baseUrl = 'http://192.168.182.199:5000';
+  static String? baseUrl = dotenv.env['BASE_URL'];
 
   Future<Map<String, String>> getUserData() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();

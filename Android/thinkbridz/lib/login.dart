@@ -1,11 +1,11 @@
 import 'dart:convert';
-import 'dart:io';
 import 'package:flutter/material.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
-// import 'dashboard.dart';
-// import 'profile.dart';
+import 'dashboard.dart'; // Import the Dashboard
+import 'profile.dart'; // Assuming you have a Profile page
 
 class Login extends StatefulWidget {
   const Login({super.key});
@@ -15,52 +15,18 @@ class Login extends StatefulWidget {
 }
 
 class _LoginState extends State<Login> {
-
   final TextEditingController emailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   bool isLoading = false;
   bool _isHidden = true;
-  String baseUrl = '';
 
-  @override
-  void initState() {
-    super.initState();
-    _fetchIPAddress();
-  }
 
-  Future<void> _fetchIPAddress() async {
-    try {
-      for (var interface in await NetworkInterface.list()) {
-        for (var addr in interface.addresses) {
-          if (addr.type == InternetAddressType.IPv4 &&
-              addr.address.startsWith("192.168.")) {
-            setState(() {
-              baseUrl = 'http://${addr.address}:5000';
-            });
-            return;
-          }
-        }
-      }
-      setState(() {
-        baseUrl = "No valid IP found";
-      });
-    } catch (e) {
-      setState(() {
-        baseUrl = "Failed to get IP";
-      });
-    }
-  }
 
-  // static const String baseUrl = 'http://192.168.139.183:5000';
+  static String? baseUrl = dotenv.env['BASE_URL'];
 
   Future<void> loginUser() async {
     if (!_formKey.currentState!.validate()) return;
-    if (baseUrl.isEmpty || baseUrl.contains("No valid IP")) {
-      showError("Could not fetch local IP. Please check your WiFi.");
-      return;
-    }
-    print(baseUrl);
 
     setState(() => isLoading = true);
 
@@ -354,14 +320,5 @@ class _LoginState extends State<Login> {
         ),
       ),
     );
-  }
-}
-
-class Dashboard extends StatelessWidget {
-  const Dashboard({super.key, required email});
-
-  @override
-  Widget build(BuildContext context) {
-    return const Placeholder();
   }
 }

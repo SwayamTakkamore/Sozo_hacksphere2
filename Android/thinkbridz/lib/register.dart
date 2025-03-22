@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'login.dart';
 import 'package:http/http.dart' as http;
@@ -23,6 +24,8 @@ class _SignupState extends State<Signup> {
   bool _isAccepted = false;
   bool _showWarning = false;
 
+  static String? baseUrl = dotenv.env['BASE_URL'];
+
   Future<void> _registerUser() async {
     // Check if the form is valid
     if (!_formKey.currentState!.validate()) return;
@@ -33,9 +36,10 @@ class _SignupState extends State<Signup> {
     final String password = _passwordController.text;
     final List<String> expertise = _expertiseController.text.split(',');
 
+
     try {
       final response = await http.post(
-        Uri.parse('http://192.168.182.199:5000/register'),
+        Uri.parse('$baseUrl/register'),
         headers: {'Content-Type': 'application/json'},
         body: jsonEncode({
           'name': name,

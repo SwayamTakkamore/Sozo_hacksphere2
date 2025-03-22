@@ -14,7 +14,7 @@ class _ideaBotState extends State<ideaBot> {
   final TextEditingController _controller = TextEditingController();
   final List<Map<String, String>> _messages = [];
 
-  final String apiUrl = "http://192.168.47.209:3000/chat";
+  final String apiUrl = "http://192.168.139.199:3000/chat";
   final String apiKey = "YOUR_API_KEY"; // Replace with actual API key
 
   Future<void> _sendMessage(String message) async {

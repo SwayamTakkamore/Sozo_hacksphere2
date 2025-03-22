@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 
 class GetMentors extends StatefulWidget {
   final String email;
@@ -24,9 +25,11 @@ class _GetMentorsState extends State<GetMentors> {
     _fetchIdeas();
   }
 
+  static String? baseUrl = dotenv.env['BASE_URL'];
+
   Future<void> _fetchIdeas() async {
     try {
-      final url = Uri.parse('http://192.168.182.199:5000/idea?email=${widget.email}');
+      final url = Uri.parse('$baseUrl/idea?email=${widget.email}');
       final response = await http.get(url);
 
       if (response.statusCode == 200) {
@@ -51,13 +54,13 @@ class _GetMentorsState extends State<GetMentors> {
 
   Future<void> _fetchMentors() async {
     try {
-      final url = Uri.parse('http://192.168.182.199:5000/mentors');
+      final url = Uri.parse('$baseUrl/mentors');
       final response = await http.get(url);
 
       if (response.statusCode == 200) {
         final data = jsonDecode(response.body);
 
-        if (data is List) { // ✅ Handle List response
+        if (data is List) {
           setState(() {
             _mentors = List<Map<String, dynamic>>.from(data);
             _isLoading = false;
@@ -105,7 +108,7 @@ class _GetMentorsState extends State<GetMentors> {
             return ListTile(
               title: Text(mentor['name'] ?? 'No Name'),
               subtitle: Text(mentor['expertise'] != null && mentor['expertise'].isNotEmpty
-                  ? mentor['expertise'].join(', ') // ✅ Convert List<String> to a single String
+                  ? mentor['expertise'].join(', ')
                   : 'No expertise listed'),
             );
           },
@@ -116,7 +119,7 @@ class _GetMentorsState extends State<GetMentors> {
 
   Future<void> _pitchIdeaToMentor(String ideaId, String mentorId) async {
     try {
-      final url = Uri.parse('http://192.168.182.199:5000/pitch');
+      final url = Uri.parse('$baseUrl/pitch');
       final response = await http.post(
         url,
         headers: {'Content-Type': 'application/json'},
