@@ -1,0 +1,78 @@
+/* Center the container and improve background */
+.auth-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background: #f4f7fc; /* Light subtle background */
+}
+
+/* Style for the login and register box */
+.auth-box {
+    width: 420px;
+    background: white;
+    padding: 40px;
+    border-radius: 12px;
+    box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.1); /* Soft shadow */
+    text-align: center;
+    justify-content: center;
+}
+
+/* Header text styling */
+h2 {
+    font-size: 30px;
+    font-weight: 600;
+    margin-bottom: 8px;
+    color: #0056b3;
+}
+
+/* Subtext under header */
+p {
+    font-size: 14px;
+    color: #666;
+    margin-bottom: 20px;
+}
+
+/* Input fields */
+input, select {
+    width: 100%;
+    padding: 12px;
+    margin: 8px 0;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    font-size: 14px;
+    box-sizing: border-box;
+}
+
+/* Button styles */
+button {
+    width: 100%;
+    padding: 12px;
+    background: #588B8B;
+    color: white;
+    font-size: 16px;
+    font-weight: 600;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+
+button:hover {
+    background: #0056b3;
+}
+
+/* Register/Login toggle text */
+.toggle-text {
+    margin-top: 12px;
+    font-size: 14px;
+    color: #666;
+}
+
+.toggle-button {
+    background: none;
+    border: none;
+    color: #588B8B;
+    cursor: pointer;
+    font-weight: 600;
+}

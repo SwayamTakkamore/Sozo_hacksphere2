@@ -1,0 +1,93 @@
+:root {
+  --primary-color: #4e7a7a;
+  --secondary-color: #7eb2b2;
+  --text-color: #333;
+  --bg-color: #f9f9f9;
+  --card-bg: #fff;
+  --border-color: #ddd;
+}
+
+/* Profile Container */
+.profile-container {
+  max-width: 900px;
+  margin: 3rem auto;
+  padding: 2rem;
+  background: var(--card-bg);
+  color: var(--text-color);
+  border-radius: 12px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  animation: fadeIn 0.5s ease-in-out;
+}
+
+/* Fade-in Animation */
+@keyframes fadeIn {
+  from {
+      opacity: 0;
+      transform: translateY(15px);
+  }
+  to {
+      opacity: 1;
+      transform: translateY(0);
+  }
+}
+
+/* Profile Details */
+.profile-details {
+  background: var(--bg-color);
+  padding: 1.5rem;
+  border-radius: 10px;
+  border-left: 4px solid var(--primary-color);
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  margin-bottom: 1.5rem;
+}
+
+.profile-details p {
+  font-size: 1.1rem;
+  margin: 0.5rem 0;
+}
+
+.profile-details strong {
+  color: var(--primary-color);
+}
+
+/* User Ideas */
+.ideas-list {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.idea-item {
+  background: var(--card-bg);
+  padding: 1.5rem;
+  border-radius: 10px;
+  border-left: 4px solid var(--secondary-color);
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+}
+
+.idea-item:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+}
+
+.idea-item p {
+  font-size: 1rem;
+  margin: 0.3rem 0;
+}
+
+.idea-item strong {
+  color: var(--secondary-color);
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .profile-container {
+      padding: 1.5rem;
+  }
+
+  .profile-details,
+  .idea-item {
+      padding: 1rem;
+  }
+}

@@ -1,0 +1,496 @@
+/* General page layout */
+.idea-status-page {
+  font-family: "Poppins", sans-serif;
+  background-color: #f4f6f8;
+  min-height: 100vh;
+}
+
+.status-container {
+  max-width: 1000px;
+  margin: 80px auto 50px;
+  padding: 0 20px;
+}
+
+/* Header styles */
+.status-header {
+  text-align: center;
+  margin-bottom: 40px;
+}
+
+.status-header h1 {
+  font-size: 2.5rem;
+  color: #2C3E50;
+  margin-bottom: 10px;
+}
+
+.status-header p {
+  font-size: 1.1rem;
+  color: #555;
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+/* Loading spinner */
+.loading-spinner {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 300px;
+}
+
+.spinner {
+  width: 50px;
+  height: 50px;
+  border: 5px solid #f3f3f3;
+  border-top: 5px solid #3a7373;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+  margin-bottom: 20px;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+/* Error message */
+.error-message {
+  background: #fff;
+  border-radius: 10px;
+  padding: 30px;
+  text-align: center;
+  box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+}
+
+.error-message h3 {
+  font-size: 1.5rem;
+  color: #e74c3c;
+  margin-bottom: 15px;
+}
+
+.error-message button {
+  background: #3a7373;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 5px;
+  font-size: 1rem;
+  cursor: pointer;
+  margin-top: 15px;
+  transition: all 0.3s ease;
+}
+
+.error-message button:hover {
+  background: #2a5353;
+}
+
+/* No ideas state */
+.no-ideas {
+  background: white;
+  border-radius: 15px;
+  padding: 50px 30px;
+  text-align: center;
+  box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+}
+
+.no-ideas-icon {
+  font-size: 3rem;
+  margin-bottom: 20px;
+  color: #7f8c8d;
+}
+
+.no-ideas h3 {
+  font-size: 1.5rem;
+  color: #333;
+  margin-bottom: 10px;
+}
+
+.no-ideas p {
+  color: #666;
+  margin-bottom: 30px;
+  max-width: 500px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.submit-idea-button {
+  background: #3a7373;
+  color: white;
+  text-decoration: none;
+  padding: 12px 25px;
+  border-radius: 30px;
+  font-weight: 600;
+  font-size: 1rem;
+  display: inline-block;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 10px rgba(58, 115, 115, 0.2);
+}
+
+.submit-idea-button:hover {
+  background: #2a5353;
+  transform: translateY(-3px);
+  box-shadow: 0 6px 15px rgba(58, 115, 115, 0.3);
+}
+
+/* Ideas list */
+.ideas-list {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  margin-bottom: 40px;
+}
+
+.idea-card {
+  background: white;
+  border-radius: 15px;
+  overflow: hidden;
+  box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.idea-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+}
+
+/* Card status border indicators */
+.idea-card.pending {
+  border-left: 5px solid #f39c12;
+}
+
+.idea-card.approved {
+  border-left: 5px solid #27ae60;
+}
+
+.idea-card.rejected {
+  border-left: 5px solid #e74c3c;
+}
+
+.idea-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  padding: 20px 25px;
+  border-bottom: 1px solid #eee;
+  background: #f9f9f9;
+}
+
+.idea-title-section {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 15px;
+}
+
+.idea-header h3 {
+  margin: 0;
+  font-size: 1.3rem;
+  color: #2C3E50;
+}
+
+.status-badge {
+  padding: 4px 12px;
+  border-radius: 20px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  display: inline-block;
+}
+
+.status-badge.pending {
+  background: #fff3cd;
+  color: #856404;
+}
+
+.status-badge.approved {
+  background: #d4edda;
+  color: #155724;
+}
+
+.status-badge.rejected {
+  background: #f8d7da;
+  color: #721c24;
+}
+
+.idea-date {
+  font-size: 0.85rem;
+  color: #7f8c8d;
+  margin-top: 5px;
+}
+
+.idea-details {
+  padding: 15px 25px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+  gap: 15px;
+  border-bottom: 1px solid #f0f0f0;
+}
+
+.idea-category {
+  font-size: 0.95rem;
+  color: #333;
+}
+
+.idea-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.tag {
+  background: #eef2f7;
+  color: #3a7373;
+  padding: 4px 12px;
+  border-radius: 30px;
+  font-size: 0.75rem;
+  font-weight: 500;
+}
+
+.idea-description {
+  padding: 20px 25px;
+  color: #555;
+  font-size: 0.95rem;
+  line-height: 1.6;
+  border-bottom: 1px solid #f0f0f0;
+}
+
+.admin-feedback {
+  padding: 15px 25px;
+  background: #f8f9fa;
+  border-bottom: 1px solid #f0f0f0;
+}
+
+.admin-feedback h4 {
+  margin: 0 0 8px;
+  font-size: 1rem;
+  color: #2C3E50;
+}
+
+.admin-feedback p {
+  margin: 0;
+  color: #555;
+  font-size: 0.95rem;
+  line-height: 1.5;
+  font-style: italic;
+}
+
+.mentor-status {
+  padding: 20px 25px;
+  border-bottom: 1px solid #f0f0f0;
+  background: #f0f7f4;
+}
+
+.mentor-status h4 {
+  margin: 0 0 15px;
+  font-size: 1rem;
+  color: #2C3E50;
+}
+
+.mentor-info {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 20px;
+}
+
+.mentor-name {
+  font-weight: 600;
+  color: #333;
+}
+
+.mentor-expertise {
+  color: #666;
+  font-size: 0.9rem;
+  font-style: italic;
+}
+
+.contact-mentor {
+  padding: 5px 15px;
+  background: #3a7373;
+  color: white;
+  text-decoration: none;
+  border-radius: 20px;
+  font-size: 0.85rem;
+  transition: all 0.2s ease;
+}
+
+.contact-mentor:hover {
+  background: #2a5353;
+  transform: translateY(-2px);
+}
+
+.awaiting-mentor {
+  background: #fff3cd;
+  padding: 12px 20px;
+  border-radius: 8px;
+  color: #856404;
+}
+
+.awaiting-mentor p {
+  margin: 0;
+  font-size: 0.95rem;
+}
+
+.idea-actions {
+  padding: 15px 25px;
+  display: flex;
+  justify-content: flex-end;
+  gap: 15px;
+}
+
+.idea-actions button {
+  padding: 8px 18px;
+  border-radius: 6px;
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.view-details {
+  background: transparent;
+  border: 1px solid #3a7373;
+  color: #3a7373;
+}
+
+.view-details:hover {
+  background: #f0f5f5;
+}
+
+.revise-idea {
+  background: #e74c3c;
+  border: 1px solid #e74c3c;
+  color: white;
+}
+
+.revise-idea:hover {
+  background: #c0392b;
+}
+
+/* Status legend */
+.status-legend {
+  background: white;
+  border-radius: 10px;
+  padding: 20px 25px;
+  margin-top: 30px;
+  box-shadow: 0 3px 10px rgba(0,0,0,0.05);
+}
+
+.status-legend h4 {
+  margin: 0 0 15px;
+  font-size: 1rem;
+  color: #2C3E50;
+}
+
+.legend-items {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+}
+
+.legend-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.legend-color {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.legend-color.pending {
+  background: #f39c12;
+}
+
+.legend-color.approved {
+  background: #27ae60;
+}
+
+.legend-color.rejected {
+  background: #e74c3c;
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+  .status-header h1 {
+    font-size: 2rem;
+  }
+  
+  .idea-header {
+    flex-direction: column;
+    gap: 10px;
+  }
+  
+  .idea-details {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+  }
+  
+  .mentor-info {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+  }
+  
+  .legend-items {
+    flex-direction: column;
+    gap: 10px;
+  }
+}
+
+/* New CSS */
+.status-badges {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.status-badge.mentor-status.accepted {
+  background: #c6f6d5;
+  color: #155724;
+}
+
+.status-badge.mentor-status.rejected {
+  background: #fddede;
+  color: #813838;
+}
+
+.status-badge.mentor-status.pending {
+  background: #e6f3ff;
+  color: #0c5460;
+}
+
+.mentor-feedback {
+  padding: 15px 25px;
+  background: #f0f7fa;
+  border-bottom: 1px solid #f0f0f0;
+}
+
+.mentor-feedback h4 {
+  margin: 0 0 8px;
+  font-size: 1rem;
+  color: #0c5460;
+}
+
+.mentor-feedback p {
+  margin: 0;
+  color: #444;
+  font-size: 0.95rem;
+  line-height: 1.5;
+  font-style: italic;
+}
+
+.find-mentor-btn {
+  background: #3a7373;
+  border: 1px solid #3a7373;
+  color: white;
+}
+
+.find-mentor-btn:hover {
+  background: #2a5353;
+}
